@@ -1,0 +1,75 @@
+======================================================================
+MODULE 6 — TIME-SERIES FORECASTING REPORT
+Generated: 2026-06-28 20:16:48
+======================================================================
+
+Target variable forecast: 'startup_count' (aggregated globally by year)
+Historical range: 2015-2024  (10 yearly points)
+Held-out test window: last 2 year(s)
+Forecast horizon: 2025-2029
+
+----------------------------------------------------------------------
+MODEL 1 — ARIMA
+----------------------------------------------------------------------
+Best order (p,d,q): (1, 1, 2)  |  AIC: 17296.24
+Forecast (mean):
+  2023 (test): 226,333
+  2024 (test): 240,122
+  2025 (future): 228,647
+  2026 (future): 226,001
+  2027 (future): 223,378
+  2028 (future): 220,779
+  2029 (future): 218,202
+
+----------------------------------------------------------------------
+MODEL 2 — Prophet
+----------------------------------------------------------------------
+  2023 (test): 228,391
+  2024 (test): 243,647
+  2025 (future): 258,946
+  2026 (future): 274,203
+  2027 (future): 289,459
+  2028 (future): 304,716
+  2029 (future): 320,015
+
+----------------------------------------------------------------------
+MODEL 3 — LSTM
+----------------------------------------------------------------------
+  2023 (test): 224,955
+  2024 (test): 226,956
+  2025 (future): 226,685
+  2026 (future): 227,357
+  2027 (future): 227,461
+  2028 (future): 227,746
+  2029 (future): 227,873
+
+----------------------------------------------------------------------
+ACCURACY ON HELD-OUT TEST YEARS
+----------------------------------------------------------------------
+  ARIMA      RMSE=  10,080.7   MAE=   9,527.2   MAPE=4.2%
+  Prophet    RMSE=  12,960.8   MAE=  12,318.9   MAPE=5.5%
+  LSTM       RMSE=   3,441.5   MAE=   2,599.5   MAPE=1.2%
+
+  Lowest RMSE on test data: LSTM
+
+----------------------------------------------------------------------
+COUNTRY-LEVEL NEXT-YEAR FORECAST (CAGR extrapolation, top 5 by volume)
+----------------------------------------------------------------------
+  USA             2024:    101,000   2025 forecast:    104,572  (+3.5%)
+  China           2024:     29,500   2025 forecast:     31,173  (+5.7%)
+  India           2024:     16,200   2025 forecast:     17,215  (+6.3%)
+  UK              2024:     10,400   2025 forecast:     10,719  (+3.1%)
+  Israel          2024:      9,700   2025 forecast:     10,058  (+3.7%)
+
+----------------------------------------------------------------------
+CAVEATS
+----------------------------------------------------------------------
+  - Only 10 annual observations are available; all forecasts beyond
+    2-3 years carry wide uncertainty regardless of which model is used.
+  - LSTM is trained on a very short series; treat it as illustrative of the
+    methodology rather than a production-grade forecast.
+  - Country-level forecasts use simple CAGR extrapolation, not the full models.
+
+======================================================================
+MODULE 6 COMPLETE
+======================================================================
