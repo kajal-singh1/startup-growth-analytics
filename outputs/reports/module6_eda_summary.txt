@@ -1,0 +1,22 @@
+============================================================
+MODULE SUMMARY: MODULE6_EDA
+Generated: 2026-06-28 22:49:17
+============================================================
+
+Dataset shape: 135 rows × 30 cols
+Countries: 15
+Years: 2015 – 2023
+Target mean growth rate (%): 6.41
+Target std (%): 20.77
+Target range (%): -24.19 to 66.57
+Pre-pandemic mean growth (%): 8.34
+Post-pandemic mean growth (%): 4.01
+Pandemic effect significant: NO
+Pandemic t-test p-value: 0.2297
+Top correlated features: ['startup_count_growth_rate_scaled', 'gdp_growth_rate', 'gdp_growth_rate_scaled']
+Highest growth country: France (10.19%)
+Lowest growth country: Netherlands (4.02%)
+Figures saved: 12
+Status: COMPLETE
+
+============================================================
