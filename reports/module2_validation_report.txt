@@ -1,0 +1,44 @@
+MODULE 2 VALIDATION REPORT
+Generated: 2026-06-28 18:58:37
+
+============================================================
+
+DATASET SUMMARY
+  World Bank rows   : 150
+  Startup Eco rows  : 150
+  Master shape      : [150, 28]
+  Missing cells     : 30
+  Period dist.      : {'pre': 75, 'post': 45, 'during': 30}
+
+PERIOD ANALYSIS
+                 avg_startup_count  avg_funding_mn  avg_gdp_growth  avg_internet_pct  total_unicorns
+pandemic_period                                                                                     
+pre                        8278.67        15274.67            2.90             77.61             562
+during                    10860.00        32376.67            0.87             85.40             548
+post                      11653.33        21873.33            2.61             89.95             245
+
+TOP 5 BY 2023 FUNDING
+  country_name  startup_count  total_funding_usd_mn  num_unicorns
+ United States          85000                170000            22
+         China          22000                 55000             8
+United Kingdom           8200                 15000             7
+         India          14000                  9600             2
+        Israel           3400                  8200             3
+
+INTERNET VS STARTUP DENSITY (2023)
+  country_name  internet_penetration  startup_density  funding_intensity
+     Singapore                  91.0           779.66         12200.0000
+        Israel                  90.4           350.52         15769.2308
+ United States                  93.0           253.81          6213.4503
+        Sweden                  95.9           228.57          5084.7458
+     Australia                  91.6           150.94          2426.0355
+   Netherlands                  95.0           150.84          3125.0000
+        Canada                  93.9           144.64          2897.1963
+United Kingdom                  97.8           121.12          4870.1299
+   South Korea                  97.6            96.71          2748.5380
+        France                  86.8            61.58          2046.2046
+       Germany                  93.3            52.13          1457.3991
+        Brazil                  87.2            18.02          1502.3474
+         China                  77.5            15.61          3091.6245
+     Indonesia                  83.8            15.50          2773.7226
+         India                  77.0             9.80          2573.7265

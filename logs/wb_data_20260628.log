@@ -1,0 +1,15 @@
+2026-06-28 12:45:14,992 | INFO | wb_data | === Module 2 Step 1: World Bank Data ===
+2026-06-28 12:45:14,997 | INFO | wb_data | Loaded 135 records for 15 countries
+2026-06-28 12:45:15,000 | INFO | wb_data | Saved CSV → data/raw/world_bank_data.csv
+2026-06-28 12:45:15,014 | INFO | wb_data | Saved 135 rows to world_bank_raw
+2026-06-28 12:45:25,744 | INFO | wb_data | === Module 2 Step 1: World Bank Data ===
+2026-06-28 12:45:25,746 | INFO | wb_data | Loaded 135 records for 15 countries
+2026-06-28 12:45:25,750 | INFO | wb_data | Saved CSV → data/raw/world_bank_data.csv
+2026-06-28 12:45:25,765 | INFO | wb_data | Saved 135 rows to world_bank_raw
+2026-06-28 13:08:14,298 | INFO | wb_data | === Module 2 Step 1: World Bank Data ===
+2026-06-28 13:08:14,306 | INFO | wb_data | Loaded 150 records for 15 countries
+2026-06-28 13:08:14,349 | INFO | wb_data | Saved CSV → data/raw/world_bank_data.csv
+2026-06-28 13:08:14,394 | INFO | wb_data | Saved 150 rows to world_bank_raw
+2026-06-28 18:58:36,899 | INFO | wb_data | === Module 2 Step 1: World Bank Data ===
+2026-06-28 18:58:36,905 | INFO | wb_data | Loaded 150 records for 15 countries
+2026-06-28 18:58:37,019 | INFO | wb_data | Saved 150 rows to world_bank_raw

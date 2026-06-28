@@ -1,0 +1,10 @@
+2026-06-28 12:45:25,792 | INFO | merge_data | === Module 2 Step 3: Merge & Validate ===
+2026-06-28 12:45:25,803 | INFO | merge_data | Master dataset shape: (135, 27)
+2026-06-28 12:45:25,806 | INFO | merge_data | Saved → data/processed/master_dataset.csv
+2026-06-28 12:45:25,820 | INFO | merge_data | Saved → SQLite: master_dataset table
+2026-06-28 13:08:14,434 | INFO | merge_data | === Module 2 Step 3: Merge & Validate ===
+2026-06-28 13:08:14,452 | INFO | merge_data | Master dataset shape: (150, 28)
+2026-06-28 13:08:14,456 | INFO | merge_data | Saved → data/processed/master_dataset.csv
+2026-06-28 13:08:14,476 | INFO | merge_data | Saved → SQLite: master_dataset table
+2026-06-28 18:58:37,121 | INFO | merge_data | === Module 2 Step 3: Merge & Validate ===
+2026-06-28 18:58:37,151 | INFO | merge_data | Master dataset shape: (150, 28)
