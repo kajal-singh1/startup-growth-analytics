@@ -1,0 +1,120 @@
+# ============================================================
+# Startup Growth Analytics System — config.yaml
+# Central configuration for all modules
+# ============================================================
+
+project:
+  name: "Startup Growth Analytics System"
+  version: "1.0.0"
+  author: "MSc Data Science Project"
+  description: >
+    End-to-end data science web application that analyzes, predicts,
+    explains, and forecasts post-pandemic startup growth across countries.
+
+# Reproducibility — set seeds everywhere these are used
+reproducibility:
+  random_seed: 42
+  numpy_seed: 42
+  tensorflow_seed: 42
+
+# Paths — relative to project root
+paths:
+  data_raw: "data/raw"
+  data_interim: "data/interim"
+  data_processed: "data/processed"
+  data_external: "data/external"
+  models_saved: "models/saved"
+  models_tuned: "models/tuned"
+  models_experiments: "models/experiments"
+  figures: "outputs/figures"
+  reports: "outputs/reports"
+  logs: "outputs/logs"
+  database: "database/startup_growth.db"
+  notebooks: "notebooks"
+
+# Data collection parameters
+data:
+  start_year: 2015
+  end_year: 2023
+  pandemic_start_year: 2020
+  target_variable: "startup_count_growth_rate"
+  countries_of_interest:
+    - "United States"
+    - "United Kingdom"
+    - "Germany"
+    - "France"
+    - "India"
+    - "China"
+    - "Canada"
+    - "Australia"
+    - "Israel"
+    - "Singapore"
+    - "Sweden"
+    - "Netherlands"
+    - "Brazil"
+    - "South Korea"
+    - "Japan"
+
+# World Bank API indicators
+world_bank:
+  base_url: "https://api.worldbank.org/v2"
+  indicators:
+    gdp: "NY.GDP.MKTP.CD"
+    gdp_per_capita: "NY.GDP.PCAP.CD"
+    gdp_growth: "NY.GDP.MKTP.KD.ZG"
+    internet_users: "IT.NET.USER.ZS"
+    unemployment: "SL.UEM.TOTL.ZS"
+    population: "SP.POP.TOTL"
+    fdi_inflows: "BX.KLT.DINV.WD.GD.ZS"
+    research_expenditure: "GB.XPD.RSDV.GD.ZS"
+    school_enrollment_tertiary: "SE.TER.ENRR"
+
+# Preprocessing
+preprocessing:
+  missing_value_strategy: "median"    # options: mean, median, mode, drop, interpolate
+  outlier_method: "iqr"               # options: iqr, zscore
+  outlier_threshold: 3.0
+  scaling_method: "standard"          # options: standard, minmax, robust
+  train_test_split: 0.2
+  validation_split: 0.1
+  cv_folds: 5
+
+# Machine Learning
+ml:
+  evaluation_metrics: ["rmse", "mae", "r2"]
+  target_r2: 0.75
+  target_mape: 15.0
+  models:
+    - "linear_regression"
+    - "random_forest"
+    - "xgboost"
+    - "lightgbm"
+
+# Forecasting
+forecasting:
+  horizon_years: 3
+  lstm_lookback: 5
+  lstm_epochs: 100
+  lstm_batch_size: 32
+
+# API
+api:
+  host: "0.0.0.0"
+  port: 8000
+  max_response_time_seconds: 2
+
+# Dashboard
+dashboard:
+  port: 8501
+  max_load_time_seconds: 5
+
+# MLflow
+mlflow:
+  tracking_uri: "outputs/logs/mlruns"
+  experiment_name: "startup_growth_v1"
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "outputs/logs/project.log"

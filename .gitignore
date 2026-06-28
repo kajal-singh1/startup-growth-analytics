@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg
+*.egg-info/
+dist/
+build/
+.Python
+pip-wheel-metadata/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data — raw data should not be in git (too large)
+data/raw/
+data/interim/
+data/processed/
+
+# Models — save via DVC or MLflow instead
+models/saved/
+models/tuned/
+
+# Logs and outputs
+outputs/logs/
+outputs/figures/
+
+# Database
+database/*.db
+
+# Environment secrets
+.env
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# MLflow
+mlruns/
+
+# DVC
+.dvc/cache
