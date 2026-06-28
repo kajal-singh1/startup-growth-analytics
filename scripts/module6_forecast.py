@@ -164,7 +164,8 @@ def run_arima(annual, horizon, test_n):
     from statsmodels.tsa.arima.model import ARIMA
     from statsmodels.tsa.stattools import acf, pacf
     from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-
+    warnings.filterwarnings("ignore")
+    
     series = annual.set_index("_year")["target"].astype(float)
     train, test = series.iloc[:-test_n], series.iloc[-test_n:]
 
