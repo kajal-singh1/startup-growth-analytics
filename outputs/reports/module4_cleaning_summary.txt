@@ -1,0 +1,16 @@
+============================================================
+MODULE SUMMARY: MODULE4_CLEANING
+Generated: 2026-06-28 22:42:44
+============================================================
+
+Raw shape: (135, 14)
+Clean shape: (135, 22)
+Missing before: 222
+Missing after: 0
+Winsorized columns: {'gdp_usd': 4, 'gdp_per_capita_usd': 4, 'gdp_growth_rate': 3, 'internet_penetration_pct': 3, 'unemployment_rate': 4, 'startup_count': 4, 'total_funding_usd': 4, 'venture_capital_usd': 4, 'startup_count_growth_rate': 4}
+Scaled columns added: 9
+DB rows inserted: 135
+Output CSV: C:\Users\AJAY\Desktop\startup_growth_analytics\data\processed\master_clean.csv
+Status: COMPLETE
+
+============================================================

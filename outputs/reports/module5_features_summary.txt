@@ -1,0 +1,13 @@
+============================================================
+MODULE SUMMARY: MODULE5_FEATURES
+Generated: 2026-06-28 22:42:46
+============================================================
+
+Input shape: (135, 30)
+New features: ['startup_density', 'funding_per_startup_mn', 'innovation_score', 'digital_readiness_score', 'investment_efficiency', 'economic_momentum', 'pandemic_interaction']
+Features with nulls: None
+DB rows inserted: 135
+Output CSV: C:\Users\AJAY\Desktop\startup_growth_analytics\data\processed\master_features.csv
+Status: COMPLETE
+
+============================================================

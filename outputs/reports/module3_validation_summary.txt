@@ -1,0 +1,20 @@
+============================================================
+MODULE SUMMARY: MODULE3_VALIDATION
+Generated: 2026-06-28 22:42:41
+============================================================
+
+Dataset shape: (135, 14)
+Total cells: 1890
+Missing cells: 222
+Data health score (%): 88.3
+Schema issues: ['None']
+Exact duplicates: 0
+Key duplicates: 0
+Panel gaps: 0
+Range violations: {'None': 0}
+Columns with outliers: 9
+Outlier details: {'internet_penetration_pct': 15, 'gdp_usd': 18, 'gdp_growth_rate': 15, 'gdp_per_capita_usd': 1, 'unemployment_rate': 8, 'startup_count': 18, 'total_funding_usd': 18, 'venture_capital_usd': 18, 'startup_count_growth_rate': 11}
+Pandemic flag mismatch: 0
+Status: PASS
+
+============================================================

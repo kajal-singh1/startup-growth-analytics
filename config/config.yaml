@@ -1,56 +1,105 @@
 project:
   name: "Startup Growth Analytics System"
   version: "1.0.0"
-  seed: 42
+  author: "MSc Data Science Project"
+
+reproducibility:
+  random_seed: 42
+  numpy_seed: 42
+  tensorflow_seed: 42
 
 paths:
   data_raw: "data/raw"
+  data_interim: "data/interim"
   data_processed: "data/processed"
-  data_features: "data/features"
-  outputs: "data/outputs"
-  models: "models"
-  logs: "logs"
-  reports: "reports"
-  database: "data/startup_growth.db"
+  data_external: "data/external"
+  models_saved: "models/saved"
+  models_tuned: "models/tuned"
+  models_experiments: "models/experiments"
+  figures: "outputs/figures"
+  reports: "outputs/reports"
+  logs: "outputs/logs"
+  database: "database/startup_growth.db"
+  notebooks: "notebooks"
+
+data:
+  start_year: 2015
+  end_year: 2023
+  pandemic_start_year: 2020
+  target_variable: "startup_count_growth_rate"
+  countries_of_interest:
+    - "United States"
+    - "United Kingdom"
+    - "Germany"
+    - "France"
+    - "India"
+    - "China"
+    - "Canada"
+    - "Australia"
+    - "Israel"
+    - "Singapore"
+    - "Sweden"
+    - "Netherlands"
+    - "Brazil"
+    - "South Korea"
+    - "Japan"
 
 world_bank:
   base_url: "https://api.worldbank.org/v2"
-  start_year: 2015
-  end_year: 2023
-  countries:
-    - "US"  # United States
-    - "IN"  # India
-    - "GB"  # United Kingdom
-    - "DE"  # Germany
-    - "FR"  # France
-    - "SG"  # Singapore
-    - "IL"  # Israel
-    - "CA"  # Canada
-    - "AU"  # Australia
-    - "BR"  # Brazil
-    - "CN"  # China
-    - "KR"  # South Korea
-    - "NL"  # Netherlands
-    - "SE"  # Sweden
-    - "ID"  # Indonesia
   indicators:
-    NY.GDP.MKTP.CD: "gdp_usd"
-    NY.GDP.PCAP.CD: "gdp_per_capita"
-    NY.GDP.MKTP.KD.ZG: "gdp_growth_rate"
-    IT.NET.USER.ZS: "internet_penetration"
-    SL.UEM.TOTL.ZS: "unemployment_rate"
-    SP.POP.TOTL: "population"
-    GB.XPD.RSDV.GD.ZS: "rd_expenditure_pct_gdp"
-    IC.BUS.EASE.XQ: "ease_of_doing_business"
+    gdp: "NY.GDP.MKTP.CD"
+    gdp_per_capita: "NY.GDP.PCAP.CD"
+    gdp_growth: "NY.GDP.MKTP.KD.ZG"
+    internet_users: "IT.NET.USER.ZS"
+    unemployment: "SL.UEM.TOTL.ZS"
+    population: "SP.POP.TOTL"
+    fdi_inflows: "BX.KLT.DINV.WD.GD.ZS"
+    research_expenditure: "GB.XPD.RSDV.GD.ZS"
+    school_enrollment_tertiary: "SE.TER.ENRR"
 
 ml:
   test_size: 0.2
   val_size: 0.1
   cv_folds: 5
   n_jobs: -1
+  evaluation_metrics: ["rmse", "mae", "r2"]
+  target_r2: 0.75
+  target_mape: 15.0
+  models:
+    - "linear_regression"
+    - "random_forest"
+    - "xgboost"
+    - "lightgbm"
 
-pandemic:
-  start_year: 2020
-  end_year: 2021
-  pre_pandemic_years: [2015, 2016, 2017, 2018, 2019]
-  post_pandemic_years: [2022, 2023]
+preprocessing:
+  missing_value_strategy: "median"
+  outlier_method: "iqr"
+  outlier_threshold: 3.0
+  scaling_method: "standard"
+  train_test_split: 0.2
+  validation_split: 0.1
+  cv_folds: 5
+
+forecasting:
+  horizon_years: 3
+  lstm_lookback: 5
+  lstm_epochs: 100
+  lstm_batch_size: 32
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  max_response_time_seconds: 2
+
+dashboard:
+  port: 8501
+  max_load_time_seconds: 5
+
+mlflow:
+  tracking_uri: "outputs/logs/mlruns"
+  experiment_name: "startup_growth_v1"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "outputs/logs/project.log"

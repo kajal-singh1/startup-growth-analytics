@@ -1,0 +1,16 @@
+============================================================
+MODULE SUMMARY: MODULE_02_STARTUP_ECOSYSTEM
+Generated: 2026-06-28 12:32:27
+============================================================
+
+Total records: 1350
+Countries: 15
+Industries: 10
+Years covered: 2015 – 2023
+Total startups: 554,647
+Total funding $B: 3074.0
+DB rows inserted: 1350
+Top country: United States
+CSV path: /home/claude/startup_growth_analytics/data/raw/startup_ecosystem_raw.csv
+
+============================================================

@@ -1,0 +1,16 @@
+============================================================
+MODULE SUMMARY: MODULE_02_MERGE
+Generated: 2026-06-28 16:36:05
+============================================================
+
+Master shape: (135, 14)
+Countries: 15
+Years: 2015 – 2023
+Total rows: 135
+Columns: 14
+Missing (%): 11.7%
+Growth rate rows: 120
+Pandemic rows: 60
+CSV: /home/claude/startup_growth_analytics/data/interim/master_raw.csv
+
+============================================================
