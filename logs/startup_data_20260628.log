@@ -7,6 +7,3 @@
 2026-06-28 13:08:14,408 | INFO | startup_data | Loaded 150 records for 15 countries
 2026-06-28 13:08:14,410 | INFO | startup_data | Saved CSV → data/raw/startup_ecosystem_data.csv
 2026-06-28 13:08:14,427 | INFO | startup_data | Saved 150 rows to startup_ecosystem_raw
-2026-06-28 18:58:37,048 | INFO | startup_data | === Module 2 Step 2: Startup Ecosystem Data ===
-2026-06-28 18:58:37,051 | INFO | startup_data | Loaded 150 records for 15 countries
-2026-06-28 18:58:37,098 | INFO | startup_data | Saved 150 rows to startup_ecosystem_raw

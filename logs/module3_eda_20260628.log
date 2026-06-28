@@ -1,0 +1,26 @@
+2026-06-28 13:34:52,249 | INFO | module3_eda | EDA on 150 rows (135 confirmed + 15 partial)
+2026-06-28 13:34:52,834 | INFO | module3_eda | Saved 01_startup_count_timeseries.png
+2026-06-28 13:34:53,356 | INFO | module3_eda | Saved 02_funding_timeseries.png
+2026-06-28 13:34:53,744 | INFO | module3_eda | Saved 03_gdp_growth_timeseries.png
+2026-06-28 13:34:54,175 | INFO | module3_eda | Saved 04_boxplot_period_comparison.png
+2026-06-28 13:34:54,988 | INFO | module3_eda | Saved 05_correlation_heatmap.png
+2026-06-28 13:34:55,453 | INFO | module3_eda | Saved 06_internet_vs_startup_density.png
+2026-06-28 13:34:55,883 | INFO | module3_eda | Saved 07_gdp_vs_funding_intensity.png
+2026-06-28 13:34:56,127 | INFO | module3_eda | Saved 08_top_sectors_2023.png
+2026-06-28 13:34:56,482 | INFO | module3_eda | Saved 09_cumulative_unicorns.png
+2026-06-28 13:34:56,786 | INFO | module3_eda | Saved 10_startup_growth_yoy.png
+2026-06-28 13:34:57,339 | INFO | module3_eda | Saved 11_rd_vs_startup_density.png
+2026-06-28 13:34:58,446 | INFO | module3_eda | Saved 12_funding_pre_post_pandemic.png
+2026-06-28 19:07:59,313 | INFO | module3_eda | EDA on 150 rows (135 confirmed + 15 partial)
+2026-06-28 19:08:00,123 | INFO | module3_eda | Saved 01_startup_count_timeseries.png
+2026-06-28 19:08:00,659 | INFO | module3_eda | Saved 02_funding_timeseries.png
+2026-06-28 19:08:01,083 | INFO | module3_eda | Saved 03_gdp_growth_timeseries.png
+2026-06-28 19:08:01,454 | INFO | module3_eda | Saved 04_boxplot_period_comparison.png
+2026-06-28 19:08:02,193 | INFO | module3_eda | Saved 05_correlation_heatmap.png
+2026-06-28 19:08:02,823 | INFO | module3_eda | Saved 06_internet_vs_startup_density.png
+2026-06-28 19:08:03,314 | INFO | module3_eda | Saved 07_gdp_vs_funding_intensity.png
+2026-06-28 19:08:03,614 | INFO | module3_eda | Saved 08_top_sectors_2023.png
+2026-06-28 19:08:04,053 | INFO | module3_eda | Saved 09_cumulative_unicorns.png
+2026-06-28 19:08:04,513 | INFO | module3_eda | Saved 10_startup_growth_yoy.png
+2026-06-28 19:08:05,153 | INFO | module3_eda | Saved 11_rd_vs_startup_density.png
+2026-06-28 19:08:06,174 | INFO | module3_eda | Saved 12_funding_pre_post_pandemic.png
