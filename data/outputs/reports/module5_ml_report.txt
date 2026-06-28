@@ -1,0 +1,95 @@
+MODULE 5 — MACHINE LEARNING REPORT
+Generated: 2026-06-28 19:49:04
+
+
+════════════════════════════════════════════════════════════════════
+  MODULE 5 — MACHINE LEARNING PIPELINE
+════════════════════════════════════════════════════════════════════
+Dataset   : 135 rows × 10 features
+Target    : startup_count
+Train set : 120 rows (2015-2022)
+Test set  : 15 rows (2023)
+Features  : gdp_growth_rate, gdp_per_capita, internet_penetration, rd_expenditure_pct, population_millions, total_funding_usd_bn, num_deals, num_unicorns, funding_per_startup_mn, period_enc
+
+════════════════════════════════════════════════════════════════════
+  5-FOLD CROSS-VALIDATION RESULTS
+════════════════════════════════════════════════════════════════════
+Model                  CV R² (mean)  CV R² (std)      CV RMSE
+------------------------------------------------------------
+Linear Regression            1.0000       0.0000          0.0
+Ridge Regression             1.0000       0.0000          0.0
+Lasso Regression             1.0000       0.0000          0.2
+Random Forest                0.9823       0.0148       2265.1
+XGBoost                      0.9154       0.1451       3075.0
+LightGBM                     0.7758       0.1417       7810.2
+Stacking Ensemble            0.3414       0.6525      10808.0
+
+  Best model (CV): Linear Regression  R²=1.0000
+
+════════════════════════════════════════════════════════════════════
+  TRAIN/TEST EVALUATION (2023 holdout)
+════════════════════════════════════════════════════════════════════
+Model                    Train R²    Test R²    Test RMSE   Test MAE
+------------------------------------------------------------------
+Linear Regression          1.0000     1.0000          0.0        0.0
+Ridge Regression           1.0000     1.0000          0.0        0.0
+Lasso Regression           1.0000     1.0000          0.0        0.0
+Random Forest              0.9965     0.9775       3460.6     1254.3
+XGBoost                    1.0000     0.9899       2320.1      910.8
+LightGBM                   0.9387     0.8469       9018.1     5978.0
+Stacking Ensemble          0.9580     0.9559       4842.5     4225.5
+
+  Best model (test): Linear Regression  Test R²=1.0000
+
+════════════════════════════════════════════════════════════════════
+  RANDOM FOREST FEATURE IMPORTANCE
+════════════════════════════════════════════════════════════════════
+  num_deals                       0.968272
+  num_unicorns                    0.012242
+  total_funding_usd_bn            0.009966
+  internet_penetration            0.002781
+  rd_expenditure_pct              0.002564
+  funding_per_startup_mn          0.002201
+  gdp_per_capita                  0.001145
+  period_enc                      0.000567
+  gdp_growth_rate                 0.000256
+  population_millions             0.000006
+
+════════════════════════════════════════════════════════════════════
+  XGBOOST FEATURE IMPORTANCE
+════════════════════════════════════════════════════════════════════
+  num_deals                       0.485827
+  num_unicorns                    0.336496
+  gdp_per_capita                  0.082998
+  total_funding_usd_bn            0.078236
+  internet_penetration            0.010487
+  rd_expenditure_pct              0.004525
+  funding_per_startup_mn          0.000626
+  gdp_growth_rate                 0.000521
+  population_millions             0.000220
+  period_enc                      0.000064
+
+════════════════════════════════════════════════════════════════════
+  SHAP MEAN ABSOLUTE VALUES (Global Importance)
+════════════════════════════════════════════════════════════════════
+  num_deals                       9351.3947
+  num_unicorns                    359.2035
+  total_funding_usd_bn            255.7985
+  rd_expenditure_pct              107.6559
+  internet_penetration            98.7570
+  funding_per_startup_mn          74.5102
+  gdp_per_capita                  32.4846
+  period_enc                      21.6920
+  gdp_growth_rate                 16.2748
+  population_millions             1.8194
+
+════════════════════════════════════════════════════════════════════
+  FINAL SUMMARY
+════════════════════════════════════════════════════════════════════
+  Best model (CV)  : Linear Regression  R²=1.0000
+  Best model (test): Linear Regression  R²=1.0000  RMSE=0
+
+  Top 3 SHAP features:
+    num_deals                       mean|SHAP|=9351.3947
+    num_unicorns                    mean|SHAP|=359.2035
+    total_funding_usd_bn            mean|SHAP|=255.7985
