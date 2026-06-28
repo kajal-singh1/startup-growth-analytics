@@ -1,0 +1,195 @@
+MODULE 4 — STATISTICAL TESTING REPORT
+Generated: 2026-06-28 19:31:21
+Dataset: 135 confirmed rows × 24 columns
+
+════════════════════════════════════════════════════════════════════
+  T1  NORMALITY — SHAPIRO-WILK TEST
+════════════════════════════════════════════════════════════════════
+H₀: Sample is drawn from a normal distribution
+H₁: Sample is NOT normally distributed  (α = 0.05)
+
+Variable : Startup Count
+  W statistic : 0.4307
+  p-value     : 1.1117e-20
+  Decision    : REJECT H₀ — data is NOT normally distributed
+
+Variable : Total Funding (USD Bn)
+  W statistic : 0.4853
+  p-value     : 9.1138e-20
+  Decision    : REJECT H₀ — data is NOT normally distributed
+
+
+════════════════════════════════════════════════════════════════════
+  T2  LEVENE'S TEST — HOMOGENEITY OF VARIANCE
+════════════════════════════════════════════════════════════════════
+H₀: All period groups have equal variance
+H₁: At least one group has a different variance  (α = 0.05)
+
+Variable : Startup Count
+  Levene F-stat : 0.3139
+  p-value       : 7.3115e-01
+  Decision      : FAIL TO REJECT — variances are equal
+
+Variable : Total Funding (USD Bn)
+  Levene F-stat : 1.5467
+  p-value       : 2.1678e-01
+  Decision      : FAIL TO REJECT — variances are equal
+
+
+════════════════════════════════════════════════════════════════════
+  T3  ONE-WAY ANOVA — STARTUP COUNT ACROSS PERIODS
+════════════════════════════════════════════════════════════════════
+H₀: μ_pre = μ_during = μ_post  (mean startup counts are equal across periods)
+H₁: At least one period mean differs  (α = 0.05)
+
+  F-statistic : 0.7997
+  p-value     : 4.5163e-01
+  Decision    : FAIL TO REJECT H₀
+
+  Pre      mean =    9,526.7   SD = 16,677.5   n = 75
+  During   mean =   12,706.7   SD = 20,662.4   n = 30
+  Post     mean =   14,416.7   SD = 23,079.2   n = 30
+
+════════════════════════════════════════════════════════════════════
+  T4  KRUSKAL-WALLIS TEST (Non-parametric alternative to ANOVA)
+════════════════════════════════════════════════════════════════════
+H₀: All period distributions are identical
+H₁: At least one distribution differs  (α = 0.05)
+
+Variable : Startup Count
+  H statistic : 22.2880
+  p-value     : 1.4461e-05
+  Decision    : REJECT H₀ — significant difference across periods
+
+Variable : Total Funding (USD Bn)
+  H statistic : 21.3368
+  p-value     : 2.3268e-05
+  Decision    : REJECT H₀ — significant difference across periods
+
+
+════════════════════════════════════════════════════════════════════
+  T5  TUKEY HSD POST-HOC TEST — PAIRWISE PERIOD COMPARISONS
+════════════════════════════════════════════════════════════════════
+(Corrects for multiple comparisons; family-wise α = 0.05)
+
+    Multiple Comparison of Means - Tukey HSD, FWER=0.05    
+===========================================================
+group1 group2 meandiff p-adj     lower      upper    reject
+-----------------------------------------------------------
+during   post   1710.0 0.9362 -10011.0403 13431.0403  False
+during    pre  -3180.0 0.7229 -12986.5259  6626.5259  False
+  post    pre  -4890.0  0.466 -14696.5259  4916.5259  False
+-----------------------------------------------------------
+
+════════════════════════════════════════════════════════════════════
+  T6  DIFFERENCE-IN-DIFFERENCES (DiD) — PANDEMIC TREATMENT EFFECT
+════════════════════════════════════════════════════════════════════
+Design: Countries split into 'high-internet' (≥85%) vs 'low-internet' (<85%)
+Treatment: pandemic period (2020-2021) vs pre-pandemic (2015-2019)
+Outcome: startup_count
+
+  High-internet group (≥85%):  pre = 4,376.6  →  during = 9,671.4  Δ = +5,294.8
+  Low-internet  group (<85%):  pre = 18,171.4  →  during = 19,788.9  Δ = +1,617.5
+
+  DiD Estimate = +3,677.4 startups
+  Interpretation: High-internet countries had 3,677 MORE startup growth than
+  low-internet countries during the pandemic — suggesting internet access
+  cushioned the pandemic shock on startup formation.
+
+  OLS DiD Regression: startup_count ~ treat + post + treat_post
+  treat_post coefficient = +7,503.72
+  p-value                = 0.2893
+  R²                     = 0.0883
+  Decision: Not significant at 5% level
+
+════════════════════════════════════════════════════════════════════
+  T7  PEARSON CORRELATION MATRIX — KEY VARIABLES
+════════════════════════════════════════════════════════════════════
+(Confirmed data only; 2024 partial excluded)
+
+  Top Pearson correlations with Startup Count:
+    Unicorns                   r = +0.8479
+    Funding (USD Bn)           r = +0.8467
+    GDP/capita                 r = +0.2483
+    Funding/Startup            r = +0.2012
+    Internet (%)               r = -0.1049
+    R&D (% GDP)                r = +0.0974
+    GDP Growth                 r = +0.0489
+    Startup Density            r = +0.0118
+
+  Significance tests (startup_count vs each variable):
+    vs total_funding_usd_bn            r=+0.8467  p=2.8586e-38  *
+    vs gdp_growth_rate                 r=+0.0489  p=5.7355e-01  
+    vs gdp_per_capita                  r=+0.2483  p=3.6819e-03  *
+    vs internet_penetration            r=-0.1049  p=2.2610e-01  
+    vs rd_expenditure_pct              r=+0.0974  p=2.6115e-01  
+    vs num_unicorns                    r=+0.8479  p=1.7737e-38  *
+    vs startup_density                 r=+0.0118  p=8.9241e-01  
+    vs funding_per_startup_mn          r=+0.2012  p=1.9311e-02  *
+
+════════════════════════════════════════════════════════════════════
+  T8  OLS REGRESSION: startup_count ~ macroeconomic predictors
+════════════════════════════════════════════════════════════════════
+Model: log(startup_count) ~ gdp_growth_rate + internet_penetration + rd_expenditure_pct
+
+
+  Model 1 (3 predictors)
+  R²          = 0.0724
+  Adj. R²     = 0.0512
+  F-statistic = 3.4107  (p=1.95e-02)
+  AIC         = 326.08  |  BIC = 337.70
+
+  Coefficients:
+    Intercept                            β=+9.580734  p=0.0000  ***
+    gdp_growth_rate                      β=+0.021748  p=0.3453  
+    internet_penetration                 β=-0.013557  p=0.0178  *
+    rd_expenditure_pct                   β=+0.120623  p=0.0623  
+
+  Model 2 (+ GDP/capita)
+  R²          = 0.1363
+  Adj. R²     = 0.1097
+  F-statistic = 5.1294  (p=7.20e-04)
+  AIC         = 318.45  |  BIC = 332.98
+
+  Coefficients:
+    Intercept                            β=+10.332528  p=0.0000  ***
+    gdp_growth_rate                      β=-0.005659  p=0.8135  
+    internet_penetration                 β=-0.028257  p=0.0002  ***
+    rd_expenditure_pct                   β=+0.109320  p=0.0814  
+    gdp_per_capita                       β=+0.000013  p=0.0024  **
+
+════════════════════════════════════════════════════════════════════
+  T9  GRANGER CAUSALITY TEST: GDP Growth → Startup Growth YoY
+════════════════════════════════════════════════════════════════════
+H₀: GDP growth does NOT Granger-cause startup growth
+H₁: GDP growth DOES Granger-cause startup growth  (α = 0.05)
+
+(Tested per country; majority verdict reported)
+
+  USA              lag-1 p=0.0578     lag-2 p=0.2992  
+  UK               lag-1 p=0.0408 ✓   lag-2 p=0.0479 ✓
+  Germany          lag-1 p=0.1670     lag-2 p=0.2950  
+  France           lag-1 p=0.0206 ✓   lag-2 p=0.2024  
+  India            lag-1 p=0.6141     lag-2 p=0.1389  
+  China            lag-1 p=0.3243     lag-2 p=0.4319  
+  Singapore        lag-1 p=0.0483 ✓   lag-2 p=0.2152  
+  Israel           lag-1 p=0.0547     lag-2 p=0.4622  
+  Brazil           lag-1 p=0.0315 ✓   lag-2 p=0.4018  
+  Canada           lag-1 p=0.0694     lag-2 p=0.1374  
+  Australia        lag-1 p=0.0773     lag-2 p=0.4282  
+  Sweden           lag-1 p=0.0101 ✓   lag-2 p=0.0435 ✓
+  South Korea      lag-1 p=0.1020     lag-2 p=0.4524  
+  Japan            lag-1 p=0.3495     lag-2 p=0.4736  
+  Netherlands      lag-1 p=0.0372 ✓   lag-2 p=0.3780  
+
+  Countries with significant Granger causality (lag-1): 6/15 (40%)
+  Majority verdict: Inconclusive / mixed evidence
+
+════════════════════════════════════════════════════════════════════
+  T10 VARIANCE DECOMPOSITION BY PERIOD
+════════════════════════════════════════════════════════════════════
+Proportion of total variance explained by each pandemic period
+
+  Pre       mean=   9,526.7  SD=16,677.5  explained variance ≈ 0.9%
+  During    mean=  12,706.7  SD=20,662.4  explained variance ≈ 0.5%
+  Post      mean=  14,416.7  SD=23,079.2  explained variance ≈ 2.6%
