@@ -113,3 +113,11 @@ def write_module_summary(module_name: str, summary: dict, config: dict = None) -
     lines.append("=" * 60)
     out_path.write_text("\n".join(lines))
     return out_path
+
+# ── Aliases for module compatibility ──────────────────────────────────────────
+def get_logger(name: str) -> logging.Logger:
+    return setup_logging(name)
+
+
+def get_project_root() -> Path:
+    return PROJECT_ROOT

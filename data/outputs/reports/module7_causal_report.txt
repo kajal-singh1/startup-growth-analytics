@@ -1,0 +1,39 @@
+======================================================================
+MODULE 7 — CAUSAL INFERENCE REPORT
+Generated: 2026-06-29 08:14:09
+Dataset: 135 rows | 15 countries
+======================================================================
+
+TREATMENT DEFINITION
+  Treatment : High internet penetration (>= median in 2019)
+  Treated countries (8): ['AU', 'CA', 'DE', 'GB', 'KR', 'NL', 'SE', 'SG']
+  Control countries: remainder
+
+METHOD 1: DIFFERENCE-IN-DIFFERENCES
+  DiD coef (basic)    : 4.6157  | p=0.1135
+  DiD coef (extended) : 7.5477  | p=0.0056
+  95% CI              : [2.2113, 12.8841]
+  R²                  : 0.7420
+  Interpretation: High-internet countries show +7.55pp higher
+  startup growth post-pandemic vs control, after controlling for confounders.
+
+METHOD 2: PROPENSITY SCORE MATCHING
+  ATT (treated - control, post period): 1.7063
+  t-stat: 0.8246 | p: 0.4166
+  Treated mean growth : 1.5406
+  Control mean growth : -0.1657
+
+METHOD 3: EVENT STUDY (Dynamic DiD)
+  Significant years (p<0.05): []
+  Pre-pandemic coefficients (should ~= 0 for parallel trends):
+    2015: coef=-1.1624 | p=0.7596
+    2016: coef=-1.8001 | p=0.6716
+    2017: coef=-0.3600 | p=0.9248
+    2018: coef=-1.3750 | p=0.7056
+    2019: coef=0.0000 | p=1.0000
+
+OVERALL CONCLUSION
+  DiD and PSM both estimate a positive treatment effect, suggesting
+  countries with higher pre-pandemic internet penetration experienced
+  stronger post-pandemic startup ecosystem recovery.
+  Caution: N=15 countries limits statistical power; results are indicative.

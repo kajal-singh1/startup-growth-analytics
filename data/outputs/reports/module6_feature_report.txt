@@ -1,0 +1,99 @@
+======================================================================
+MODULE 6 — FEATURE ENGINEERING & DATA CLEANING REPORT
+Generated: 2026-06-29 08:13:16
+======================================================================
+
+DATASET SUMMARY
+  Input  : 150 rows x 28 cols
+  Output : 150 rows x 79 cols
+
+MISSING VALUE TREATMENT
+  startup_growth_yoy  : filled with country-level median
+  funding_growth_yoy  : filled with country-level median
+  Total missing after : 0
+
+OUTLIER CAPPING (IQR x1.5)
+  gdp_usd_bn                          capped=20 | range=[-2.24, 6.27]
+  total_funding_usd_mn                capped=24 | range=[-7787.50, 21512.50]
+  startup_count                       capped=24 | range=[-1893.75, 10256.25]
+  startup_density                     capped=12 | range=[-192.58, 369.29]
+  funding_intensity                   capped=17 | range=[-4017.50, 12202.38]
+  unicorn_rate                        capped=12 | range=[-0.35, 2.49]
+  startup_growth_yoy                  capped=2 | range=[-25.51, 36.64]
+  funding_growth_yoy                  capped=14 | range=[-85.20, 97.56]
+
+ENGINEERED FEATURES (12 new)
+  innovation_score               0.4*R&D + 0.35*Internet + 0.25*EaseOfBusiness (normalized)
+  digital_readiness              0.5*Internet + 0.3*R&D + 0.2*GDPperCapita (normalized)
+  investment_efficiency          Unicorns per billion USD invested
+  economic_stability             0.6*GDP_growth + 0.4*(1-unemployment) (normalized)
+  startup_momentum               3-year rolling avg startup growth YoY per country
+  funding_momentum               3-year rolling avg funding growth YoY per country
+  gdp_per_startup                GDP (USD) / startup count
+  unicorn_pipeline               Cumulative unicorns per 1000 startups
+  strong_recovery                Flag: post-pandemic + growth > pre-pandemic median
+  high_innovation                Flag: innovation_score > median
+  funding_per_deal               Total funding / number of deals
+  year_idx                       Year offset from 2015 (0-based)
+
+SCALING
+  Method  : StandardScaler (zero mean, unit variance)
+  Columns : 55
+  Saved   : C:\Users\AJAY\Desktop\startup_growth_analytics\models\scaler.joblib
+
+FEATURE LIST (55 ML-ready features)
+  gdp_usd_bn_scaled
+  gdp_per_capita_scaled
+  gdp_growth_rate_scaled
+  internet_penetration_scaled
+  unemployment_rate_scaled
+  population_mn_scaled
+  rd_expenditure_pct_gdp_scaled
+  startup_count_scaled
+  total_funding_usd_mn_scaled
+  num_deals_scaled
+  num_unicorns_scaled
+  startup_density_scaled
+  funding_intensity_scaled
+  startup_growth_yoy_scaled
+  funding_growth_yoy_scaled
+  innovation_score_scaled
+  digital_readiness_scaled
+  investment_efficiency_scaled
+  economic_stability_scaled
+  startup_momentum_scaled
+  funding_momentum_scaled
+  funding_per_deal_scaled
+  innovation_score
+  digital_readiness
+  economic_stability
+  investment_efficiency
+  startup_momentum
+  funding_momentum
+  gdp_per_startup
+  unicorn_pipeline
+  funding_per_deal
+  strong_recovery
+  high_innovation
+  year_idx
+  period_enc
+  is_pandemic
+  is_post_pandemic
+  is_partial
+  sector_AI/ML
+  sector_AgriTech
+  sector_BioTech
+  sector_CleanTech
+  sector_CyberSecurity
+  sector_EV/CleanTech
+  sector_EdTech
+  sector_FinTech
+  sector_HealthTech
+  sector_Mobility
+  sector_SaaS
+  sector_Web3
+  sector_eCommerce
+  period_enc
+  period_during
+  period_post
+  period_pre
