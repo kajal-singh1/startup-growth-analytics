@@ -1,0 +1,76 @@
+========================================================================
+MODULE 8 — MACHINE LEARNING — FULL REPORT
+Generated: 2026-06-29 06:55:11
+========================================================================
+
+OBJECTIVE
+------------------------------------------------------------------------
+Predict 'startup_count_growth_rate' from 18 economic/digital/engineered features,
+comparing a linear baseline against tree-ensemble models.
+
+WHY THIS MODULE IS NEEDED
+------------------------------------------------------------------------
+Module 7's OLS regression reached R²=0.24 and the target failed normality
+(Shapiro-Wilk p=0.0003) — both symptoms of non-linear structure a single
+linear equation can't capture. Tree ensembles model that structure directly.
+
+ALGORITHMS USED
+------------------------------------------------------------------------
+Linear Regression (baseline) | Random Forest | XGBoost | LightGBM
+K-Fold cross-validation (k=5) | SHAP explainability
+
+RESULTS — MODEL LEADERBOARD
+------------------------------------------------------------------------
+            model  cv_r2_mean  cv_r2_std  test_rmse  test_mae  test_r2
+          XGBoost      0.5303     0.2598    12.0422    9.6236   0.6026
+    Random Forest      0.5842     0.1814    12.5022    8.4713   0.5716
+         LightGBM      0.3660     0.4531    12.6422    8.8184   0.5620
+Linear Regression     -0.1887     0.6011    19.1799   14.6915  -0.0082
+
+Best model: XGBoost  (Test R² = 0.6026, target = 0.75)
+Target R² NOT YET achieved (0.60 < 0.75). With only 135 rows of
+panel data and a noisy growth-rate target, this is expected — Module 9
+(Hyperparameter Tuning) and richer features may close some of the gap, but
+a ceiling well below 0.75 on a dataset this size and noisy would not be surprising.
+
+EXPLAINABLE AI (SHAP)
+------------------------------------------------------------------------
+Computed using: Random Forest
+Top 5 features by mean |SHAP value|:
+  year                           7.1670
+  gdp_growth_rate                3.7149
+  pandemic_interaction           2.3345
+  period_1                       1.0229
+  economic_momentum              0.9662
+
+LIMITATIONS
+------------------------------------------------------------------------
+- 135 rows total (15 countries x 9 years) is small for 4 models + CV; results
+  carry real sampling uncertainty (see CV std in the leaderboard above).
+- Train/test split is a random row split, not split by year or by country -
+  rows from the same country appear in both train and test, which can inflate
+  apparent performance vs. a true held-out-country or held-out-year evaluation.
+- Gradient boosting models (XGBoost/LightGBM) are especially prone to overfitting
+  at this sample size; trust the CV mean/std over the single test-set number.
+
+PRACTICAL INTERPRETATION
+------------------------------------------------------------------------
+Treat these models as exploratory signal-finders, not production growth
+forecasters yet. The SHAP ranking is more trustworthy for 'which factors matter
+most' than the raw R² is for 'how accurately can we predict next year's growth'.
+
+BEST PRACTICES APPLIED
+------------------------------------------------------------------------
+- Cross-validation (not just a single train/test split) used to judge generalization.
+- Scaling only applied to Linear Regression (tree models don't need/want it).
+- Scaled-duplicate and target-leakage columns explicitly excluded from features.
+- Random seed fixed via config for reproducibility.
+
+CONNECTION TO THE NEXT MODULE
+------------------------------------------------------------------------
+Module 9 (Hyperparameter Tuning) will tune XGBoost specifically — Grid/Random
+Search and Optuna — instead of the default hyperparameters used here.
+
+========================================================================
+MODULE 8 COMPLETE
+========================================================================

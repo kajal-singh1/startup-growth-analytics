@@ -1,0 +1,18 @@
+============================================================
+MODULE SUMMARY: MODULE8_MACHINE_LEARNING
+Generated: 2026-06-29 06:55:11
+============================================================
+
+best_model: XGBoost
+best_test_r2: 0.6026
+best_cv_r2_mean: 0.5303
+target_r2: 0.75
+target_achieved: False
+n_features: 18
+n_train: 108
+n_test: 27
+models_skipped_missing_deps: []
+shap_available: True
+figures_saved: 10
+
+============================================================
