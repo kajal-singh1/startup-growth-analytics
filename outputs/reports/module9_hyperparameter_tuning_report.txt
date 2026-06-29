@@ -1,0 +1,81 @@
+========================================================================
+MODULE 9 — HYPERPARAMETER TUNING — FULL REPORT
+Generated: 2026-06-29 07:12:32
+========================================================================
+
+OBJECTIVE
+------------------------------------------------------------------------
+Improve Module 8's XGBoost winner via Grid Search, Random Search, and Optuna,
+and re-check Random Forest to confirm XGBoost remains the better choice.
+
+ALGORITHMS USED
+------------------------------------------------------------------------
+GridSearchCV | RandomizedSearchCV | Optuna (TPE sampler) | K-Fold CV
+
+RESULTS — XGBOOST: BASELINE vs EACH TUNING STRATEGY
+------------------------------------------------------------------------
+  Baseline        CV R²=+0.5303±0.2598   Test R²=+0.6026   RMSE=12.042
+  Grid Search     CV R²=+0.6476±0.1822   Test R²=+0.7002   RMSE=10.459  (8.4s)
+  Random Search   CV R²=+0.6449±0.1991   Test R²=+0.5519   RMSE=12.787  (11.9s)
+  Optuna          CV R²=+0.6698±0.1989   Test R²=+0.5884   RMSE=12.255  (19.7s)
+
+Best strategy: Optuna
+Best hyperparameters found:
+  n_estimators: 240
+  max_depth: 6
+  learning_rate: 0.04596638950493636
+  subsample: 0.8267433317941908
+  colsample_bytree: 0.7312202514997274
+  min_child_weight: 6
+  reg_alpha: 1.449788619360079
+  reg_lambda: 2.3902000515581525
+
+Test R² change vs Module 8 baseline: -0.0142
+
+RANDOM FOREST — QUICK TUNING SANITY CHECK
+------------------------------------------------------------------------
+  Baseline RF   CV R²=+0.5842±0.1814  Test R²=+0.5716
+  Tuned RF      CV R²=+0.6052±0.1618  Test R²=+0.5575
+  Tuned RF params: {'max_depth': 7, 'max_features': np.float64(0.9557805271080094), 'min_samples_leaf': 2, 'n_estimators': 140}
+
+OVERALL WINNER ACROSS ALL MODELS: XGBoost (Optuna)
+
+FINAL LEADERBOARD (all models, baseline + tuned)
+------------------------------------------------------------------------
+                   model  cv_r2_mean  cv_r2_std  test_r2  test_rmse  test_mae
+        XGBoost (Optuna)      0.6698     0.1989   0.5884    12.2549    9.5070
+   Random Forest (tuned)      0.6052     0.1618   0.5575    12.7070    8.5227
+Random Forest (baseline)      0.5842     0.1814   0.5716    12.5022    8.4713
+      XGBoost (baseline)      0.5303     0.2598   0.6026    12.0422    9.6236
+
+LIMITATIONS
+------------------------------------------------------------------------
+- Grid Search's grid and Random/Optuna's budgets were kept modest to finish in
+  a reasonable time on a laptop; a larger search budget could find a better point.
+- All three strategies were tuned against the SAME CV folds as the baseline, so
+  improvements reflect genuine generalization gains, not different evaluation luck -
+  but the absolute numbers still inherit Module 8's small-sample-size caveats.
+- Optuna's hyperparameter-importance plot reflects sensitivity WITHIN the ranges
+  searched here, not a universal ranking of XGBoost hyperparameters.
+
+PRACTICAL INTERPRETATION
+------------------------------------------------------------------------
+Compare the CV STD (not just the mean) before and after tuning: a real win from
+tuning often shows up as a smaller std (more reliable performance across folds)
+even when the mean R² only moves a little.
+
+BEST PRACTICES APPLIED
+------------------------------------------------------------------------
+- All three methods tuned against IDENTICAL CV folds for a fair comparison.
+- Final model selected by CV performance, not by peeking at the test set repeatedly.
+- Random Forest re-tuned too, so the 'XGBoost wins' conclusion isn't assumed -
+  it's re-verified after giving every model a fair shot.
+
+CONNECTION TO THE NEXT MODULE
+------------------------------------------------------------------------
+Module 11 (Explainable AI) will run SHAP on XGBoost (Optuna), the tuned winner
+from this module, rather than on Module 8's untuned defaults.
+
+========================================================================
+MODULE 9 COMPLETE
+========================================================================

@@ -1,0 +1,16 @@
+============================================================
+MODULE SUMMARY: MODULE9_HYPERPARAMETER_TUNING
+Generated: 2026-06-29 07:12:32
+============================================================
+
+xgboost_baseline_test_r2: 0.6026
+xgboost_best_strategy: Optuna
+xgboost_tuned_test_r2: 0.5884
+improvement: -0.0142
+rf_baseline_test_r2: 0.5716
+rf_tuned_test_r2: 0.5575
+overall_winner: XGBoost (Optuna)
+optuna_available: True
+figures_saved: 10
+
+============================================================
