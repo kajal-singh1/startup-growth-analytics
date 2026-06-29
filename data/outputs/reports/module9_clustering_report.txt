@@ -1,0 +1,33 @@
+============================================================
+MODULE 9 — CLUSTERING REPORT
+============================================================
+
+Algorithm        : K-Means (k-means++ init, n_init=50)
+Optimal K        : 2
+Silhouette score : 0.3567
+Bootstrap mean   : 0.3447 +/- 0.0440
+
+K SELECTION SUMMARY
+----------------------------------------
+  K=2  silhouette=0.3567  inertia=3260.9 <-- OPTIMAL
+  K=3  silhouette=0.3095  inertia=2587.3
+  K=4  silhouette=0.2562  inertia=2214.8
+  K=5  silhouette=0.2664  inertia=2005.9
+  K=6  silhouette=0.2630  inertia=1845.9
+  K=7  silhouette=0.2685  inertia=1688.5
+
+CLUSTER ASSIGNMENTS
+----------------------------------------
+  Cluster 1: Country_30, Country_31, Country_32, Country_33, Country_34, Country_35, Country_36, Country_37, Country_38, Country_39, Country_66, Country_86, Country_96, Country_97, Country_140, Country_141, Country_142, Country_143, Country_144, Country_145, Country_146, Country_147, Country_148, Country_149
+  Cluster 2: Country_0, Country_1, Country_2, Country_3, Country_4, Country_5, Country_6, Country_7, Country_8, Country_9, Country_10, Country_11, Country_12, Country_13, Country_14, Country_15, Country_16, Country_17, Country_18, Country_19, Country_20, Country_21, Country_22, Country_23, Country_24, Country_25, Country_26, Country_27, Country_28, Country_29, Country_40, Country_41, Country_42, Country_43, Country_44, Country_45, Country_46, Country_47, Country_48, Country_49, Country_50, Country_51, Country_52, Country_53, Country_54, Country_55, Country_56, Country_57, Country_58, Country_59, Country_60, Country_61, Country_62, Country_63, Country_64, Country_65, Country_67, Country_68, Country_69, Country_70, Country_71, Country_72, Country_73, Country_74, Country_75, Country_76, Country_77, Country_78, Country_79, Country_80, Country_81, Country_82, Country_83, Country_84, Country_85, Country_87, Country_88, Country_89, Country_90, Country_91, Country_92, Country_93, Country_94, Country_95, Country_98, Country_99, Country_100, Country_101, Country_102, Country_103, Country_104, Country_105, Country_106, Country_107, Country_108, Country_109, Country_110, Country_111, Country_112, Country_113, Country_114, Country_115, Country_116, Country_117, Country_118, Country_119, Country_120, Country_121, Country_122, Country_123, Country_124, Country_125, Country_126, Country_127, Country_128, Country_129, Country_130, Country_131, Country_132, Country_133, Country_134, Country_135, Country_136, Country_137, Country_138, Country_139
+
+INTERPRETATION
+----------------------------------------
+  Countries in the same cluster share structural
+  startup ecosystem characteristics.
+  Policy makers can use cluster peers as benchmarks.
+
+Figures saved: 10
+Location: C:\Users\AJAY\Desktop\startup_growth_analytics\data\outputs\figures\module9
+
+============================================================
