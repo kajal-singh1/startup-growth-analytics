@@ -1,0 +1,21 @@
+============================================================
+MODULE SUMMARY: MODULE7_STATS
+Generated: 2026-06-29 06:35:50
+============================================================
+
+Dataset shape: (135, 31)
+Features tested: 11
+Sig. Pearson features (p<0.05): ['gdp_growth_rate', 'economic_momentum']
+Sig. Spearman features (p<0.05): ['gdp_growth_rate', 'economic_momentum', 'pandemic_interaction', 'pandemic_period']
+OLS R²: 0.2415
+OLS Adjusted R²: 0.1803
+OLS F-statistic p-value: 0.0001
+Shapiro-Wilk (normality): Target is NOT normally distributed (use Spearman)
+T-test pandemic effect: No significant difference between pre (8.34%) and post (4.01%) pandemic growth (p=0.2775)
+ANOVA GDP groups: No significant growth rate differences across GDP groups
+Top feature by Pearson: gdp_growth_rate
+Top Pearson r: 0.4129
+Figures saved: 10
+Status: COMPLETE
+
+============================================================
