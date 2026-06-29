@@ -1,0 +1,35 @@
+============================================================
+MODULE 8 — EXPLAINABLE AI REPORT
+============================================================
+
+Model used       : RandomForestRegressor
+Train R2         : 0.9541
+Samples analysed : 150
+Features         : 34
+
+TOP 5 FEATURES BY MEAN |SHAP|
+----------------------------------------
+  1. funding_growth_yoy                   mean|SHAP|=4.0760
+  2. year_idx                             mean|SHAP|=2.9087
+  3. startup_momentum                     mean|SHAP|=2.0412
+  4. gdp_growth_rate                      mean|SHAP|=0.9199
+  5. funding_momentum                     mean|SHAP|=0.5279
+
+TOP 5 FEATURES BY PERMUTATION IMPORTANCE
+----------------------------------------
+  1. funding_growth_yoy                   R2 drop=0.5243
+  2. year_idx                             R2 drop=0.2780
+  3. startup_momentum                     R2 drop=0.1531
+  4. gdp_growth_rate                      R2 drop=0.0513
+  5. funding_momentum                     R2 drop=0.0181
+
+KEY FINDINGS
+----------------------------------------
+  Most impactful feature (SHAP): funding_growth_yoy
+  Most impactful feature (Perm): funding_growth_yoy
+  SHAP baseline (avg prediction): 8.214%
+
+Figures saved: 10
+Location: C:\Users\AJAY\Desktop\startup_growth_analytics\data\outputs\figures\module8
+
+============================================================
