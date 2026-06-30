@@ -126,15 +126,31 @@ def cap_outliers(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     for col in OUTLIER_COLS:
         if col not in df.columns:
             continue
-        q1, q3 = df[col].quantile(0.25), df[col].quantile(0.75)
-        iqr     = q3 - q1
-        lo, hi  = q1 - 1.5 * iqr, q3 + 1.5 * iqr
-        n_out   = ((df[col] < lo) | (df[col] > hi)).sum()
-        df[col] = df[col].clip(lo, hi)
-        caps[col] = {"lower": round(lo, 4), "upper": round(hi, 4), "capped_rows": int(n_out)}
+        total_capped = 0
+        bounds_log = []
+        # Compute IQR bounds PER COUNTRY, not globally — startup ecosystems
+        # vary by orders of magnitude across countries, so a single global
+        # ceiling clips every large country's high-growth years down to
+        # the same flat value. Capping within each country preserves real
+        # year-to-year variation while still controlling for genuine
+        # within-country outliers.
+        def cap_group(group):
+            nonlocal total_capped
+            q1, q3 = group[col].quantile(0.25), group[col].quantile(0.75)
+            iqr = q3 - q1
+            if iqr == 0:
+                return group
+            lo, hi = q1 - 1.5 * iqr, q3 + 1.5 * iqr
+            n_out = ((group[col] < lo) | (group[col] > hi)).sum()
+            total_capped += int(n_out)
+            group[col] = group[col].clip(lo, hi)
+            return group
+
+        df = df.groupby("country_code", group_keys=False).apply(cap_group)
+        caps[col] = {"capped_rows": total_capped, "method": "per-country IQR"}
 
     total_capped = sum(v["capped_rows"] for v in caps.values())
-    logger.info(f"Outlier capping: {total_capped} values capped across {len(caps)} columns")
+    logger.info(f"Outlier capping: {total_capped} values capped across {len(caps)} columns (per-country)")
     return df, caps
 
 
@@ -497,10 +513,10 @@ def write_report(df_raw, df_final, caps, feature_list, scaler_path):
         f.write("  funding_growth_yoy  : filled with country-level median\n")
         f.write(f"  Total missing after : {df_final.isnull().sum().sum()}\n\n")
 
-        f.write("OUTLIER CAPPING (IQR x1.5)\n")
+        f.write("OUTLIER CAPPING (IQR x1.5, computed per-country)\n")
         for col, info in caps.items():
-            f.write(f"  {col:<35} capped={info['capped_rows']} | "
-                    f"range=[{info['lower']:.2f}, {info['upper']:.2f}]\n")
+            f.write(f"  {col:<35} capped={info['capped_rows']} rows | "
+                    f"method={info.get('method', 'per-country IQR')}\n")
 
         f.write("\nENGINEERED FEATURES (12 new)\n")
         eng = [

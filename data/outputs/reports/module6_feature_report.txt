@@ -1,6 +1,6 @@
 ======================================================================
 MODULE 6 — FEATURE ENGINEERING & DATA CLEANING REPORT
-Generated: 2026-06-29 08:13:16
+Generated: 2026-06-30 17:37:49
 ======================================================================
 
 DATASET SUMMARY
@@ -12,15 +12,15 @@ MISSING VALUE TREATMENT
   funding_growth_yoy  : filled with country-level median
   Total missing after : 0
 
-OUTLIER CAPPING (IQR x1.5)
-  gdp_usd_bn                          capped=20 | range=[-2.24, 6.27]
-  total_funding_usd_mn                capped=24 | range=[-7787.50, 21512.50]
-  startup_count                       capped=24 | range=[-1893.75, 10256.25]
-  startup_density                     capped=12 | range=[-192.58, 369.29]
-  funding_intensity                   capped=17 | range=[-4017.50, 12202.38]
-  unicorn_rate                        capped=12 | range=[-0.35, 2.49]
-  startup_growth_yoy                  capped=2 | range=[-25.51, 36.64]
-  funding_growth_yoy                  capped=14 | range=[-85.20, 97.56]
+OUTLIER CAPPING (IQR x1.5, computed per-country)
+  gdp_usd_bn                          capped=1 rows | method=per-country IQR
+  total_funding_usd_mn                capped=17 rows | method=per-country IQR
+  startup_count                       capped=0 rows | method=per-country IQR
+  startup_density                     capped=0 rows | method=per-country IQR
+  funding_intensity                   capped=14 rows | method=per-country IQR
+  unicorn_rate                        capped=11 rows | method=per-country IQR
+  startup_growth_yoy                  capped=5 rows | method=per-country IQR
+  funding_growth_yoy                  capped=17 rows | method=per-country IQR
 
 ENGINEERED FEATURES (12 new)
   innovation_score               0.4*R&D + 0.35*Internet + 0.25*EaseOfBusiness (normalized)

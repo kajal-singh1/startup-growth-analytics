@@ -1,0 +1,5 @@
+model,cv_r2_mean,cv_r2_std,test_r2,test_rmse,test_mae
+XGBoost (Optuna),0.6698,0.1989,0.5884,12.2549,9.507
+Random Forest (tuned),0.6052,0.1618,0.5575,12.707,8.5227
+Random Forest (baseline),0.5842,0.1814,0.5716,12.5022,8.4713
+XGBoost (baseline),0.5303,0.2598,0.6026,12.0422,9.6236

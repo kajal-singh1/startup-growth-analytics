@@ -1,0 +1,20 @@
+# ============================================================
+# render.yaml — Render Blueprint
+# Deploys the FastAPI backend (scripts/api.py) as a free web service
+# Docs: https://render.com/docs/blueprint-spec
+# ============================================================
+
+services:
+  - type: web
+    name: startup-growth-analytics-api
+    runtime: python
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: "pip install -r requirements_api.txt"
+    startCommand: "uvicorn scripts.api:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+    healthCheckPath: /
+    autoDeploy: true

@@ -19,20 +19,25 @@ env/
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
-# Data — raw data should not be in git (too large)
-data/raw/
+# --------------------------------------------------------------
+# DATA — needed for deployment (dashboard reads these CSVs)
+# Only exclude truly raw/huge intermediate files, keep final outputs
+# --------------------------------------------------------------
 data/interim/
-data/processed/
+# (data/raw/, data/processed/, data/*.csv are KEPT for deployment)
 
-# Models — save via DVC or MLflow instead
-models/saved/
+# --------------------------------------------------------------
+# MODELS — keep the trained model needed by the API
+# --------------------------------------------------------------
 models/tuned/
+models/experiments/
+# (models/saved/best_model.pkl is KEPT for /predict endpoint)
 
-# Logs and outputs
+# Logs (large, regenerated on each run)
 outputs/logs/
-outputs/figures/
+data/outputs/logs/
 
-# Database
+# Database (regenerate locally, don't ship to prod)
 database/*.db
 
 # Environment secrets

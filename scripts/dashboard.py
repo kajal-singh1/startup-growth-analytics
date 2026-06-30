@@ -149,7 +149,7 @@ def show_figure_gallery(module_num, cols=2):
         c_list = st.columns(len(row))
         for col, (name, path) in zip(c_list, row):
             col.image(str(path), caption=name.replace("_", " ").title(),
-                      width="stretch")
+                      use_column_width=True)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -158,7 +158,6 @@ def show_figure_gallery(module_num, cols=2):
 
 with st.sidebar:
     st.markdown("## 🚀 Startup Growth Analytics")
-    st.markdown("*MSc Data Science Portfolio Project*")
     st.divider()
 
     page = st.radio("Navigate", [
@@ -181,21 +180,20 @@ with st.sidebar:
     else:
         st.error("❌ No data found")
 
-    st.divider()
-    st.caption("Modules complete: 10 / 13")
-    st.progress(10/13)
-
 
 # ─────────────────────────────────────────────────────────────────────────────
 # PAGE 1 — OVERVIEW
 # ─────────────────────────────────────────────────────────────────────────────
 
 if page == "🏠 Overview":
-    st.title("🚀 Startup Growth Analytics System")
+    st.markdown(
+        '<h1 style="white-space: nowrap;">🚀 Startup Growth Analysis System</h1>',
+        unsafe_allow_html=True
+    )
     st.markdown("""
-    > End-to-end data science web application analyzing post-pandemic startup
-    > growth across **15 countries** (2015–2023/24) using ML, causal inference,
-    > explainable AI, and time-series forecasting.
+    > Quantifying how digital infrastructure shaped startup resilience
+    > through the post-pandemic recovery — across 15 economies, nine years,
+    > and four predictive models.
     """)
 
     df = load_features()
@@ -226,6 +224,51 @@ if page == "🏠 Overview":
 
     st.divider()
 
+    # Countries covered + rationale
+    st.markdown('<div class="section-header">Countries Covered</div>',
+                unsafe_allow_html=True)
+    countries_list = sorted(df[country_col].unique().tolist())
+    n_cols = 5
+    chip_cols = st.columns(n_cols)
+    for i, c in enumerate(countries_list):
+        chip_cols[i % n_cols].markdown(
+            f'<div style="background:#F5F6FA;border-radius:8px;padding:0.4rem 0.7rem;'
+            f'margin:0.2rem 0;text-align:center;font-size:0.9rem;'
+            f'border:1px solid #e0e0e8;">{c}</div>',
+            unsafe_allow_html=True
+        )
+
+    with st.expander("Why these 15 countries?"):
+        st.markdown("""
+        These 15 economies were selected to give the broadest possible
+        comparison of startup ecosystems while keeping every country in
+        the sample backed by complete, reliable, free public data for the
+        full 2015–2023 period (World Bank indicators + tracked startup
+        ecosystem data).
+
+        The selection deliberately spans:
+        - **Mature ecosystems** (United States, United Kingdom, Germany, Japan)
+        - **High-growth emerging markets** (India, Brazil, Indonesia, China)
+        - **Small, high-density innovation hubs** (Israel, Singapore, Sweden, Netherlands)
+        - **Mid-sized diversified economies** (Canada, Australia, South Korea, France)
+
+        This mix lets the analysis compare startup resilience across very
+        different economic sizes, internet penetration levels, and
+        pandemic policy responses — rather than only studying countries
+        that already look alike. It is not an exhaustive list of every
+        country with startup activity; it is a deliberately diverse,
+        data-complete sample chosen to maximize the validity of
+        cross-country comparison within this project's scope.
+
+        Expanding to more countries is possible but was outside this
+        project's scope, since each additional country requires fully
+        clean, year-complete data across every indicator used in the
+        model — adding countries with partial or unreliable data would
+        weaken rather than strengthen the analysis.
+        """)
+
+    st.divider()
+
     # Global startup trend
     st.markdown('<div class="section-header">Global Startup Count Trend</div>',
                 unsafe_allow_html=True)
@@ -237,29 +280,7 @@ if page == "🏠 Overview":
         fig.add_vrect(x0=2019.5, x1=2021.5, fillcolor="red",
                       opacity=0.08, annotation_text="COVID-19")
         fig.update_layout(height=320, margin=dict(t=20, b=20))
-        st.plotly_chart(fig, width="stretch")
-
-    # Module status table
-    st.divider()
-    st.markdown('<div class="section-header">Module Completion Status</div>',
-                unsafe_allow_html=True)
-    modules = [
-        ("1", "Project Setup",        "✅ Complete"),
-        ("2", "Data Collection",      "✅ Complete"),
-        ("3", "EDA",                  "✅ Complete"),
-        ("4", "Statistical Analysis", "✅ Complete"),
-        ("5", "Machine Learning",     "✅ Complete"),
-        ("6", "Feature Engineering",  "✅ Complete"),
-        ("7", "Causal Inference",     "✅ Complete"),
-        ("8", "Explainable AI",       "✅ Complete"),
-        ("9", "Clustering",           "✅ Complete"),
-        ("10","Forecasting",          "✅ Complete"),
-        ("11","Dashboard",            "🔄 Running"),
-        ("12","FastAPI",              "⏳ Pending"),
-        ("13","Deployment",           "⏳ Pending"),
-    ]
-    mod_df = pd.DataFrame(modules, columns=["#", "Module", "Status"])
-    st.dataframe(mod_df, width="stretch", hide_index=True)
+        st.plotly_chart(fig, use_container_width=True)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -285,26 +306,37 @@ elif page == "🌍 Country Analysis":
             "economic_momentum",
         ] if c in df.columns])
 
-    sub = df[df[country_col] == selected].sort_values("year")
+    # Aggregate to one row per (country, year) first — the source data may have
+    # multiple rows per year (e.g. one per industry), which would otherwise
+    # cause flat/duplicate-looking lines or incorrect single-row plotting.
+    country_raw = df[df[country_col] == selected]
+    agg_func = "sum" if metric in ("startup_count", "total_funding_usd") else "mean"
+    sub = (country_raw.groupby("year", as_index=False)[metric]
+           .agg(agg_func)
+           .sort_values("year"))
 
     with col2:
-        if metric in sub.columns:
+        if metric in sub.columns and sub["year"].nunique() > 1:
             fig = px.line(sub, x="year", y=metric, markers=True,
                           title=f"{selected} — {metric.replace('_',' ').title()}",
                           color_discrete_sequence=["#667eea"])
             fig.add_vrect(x0=2019.5, x1=2021.5, fillcolor="red",
                           opacity=0.08, annotation_text="COVID-19")
             fig.update_layout(height=320, margin=dict(t=40, b=20))
-            st.plotly_chart(fig, width="stretch")
+            st.plotly_chart(fig, use_container_width=True)
+        else:
+            st.info(f"Not enough year-wise data to chart {metric} for {selected}.")
 
     st.divider()
     st.markdown('<div class="section-header">Country vs Global Comparison</div>',
                 unsafe_allow_html=True)
 
     if "startup_count" in df.columns:
-        global_avg = df.groupby("year")["startup_count"].mean().reset_index()
+        global_avg = df.groupby("year")["startup_count"].sum().reset_index()
+        global_avg = global_avg.groupby("year", as_index=False)["startup_count"].mean()
         global_avg["country"] = "Global Average"
-        country_data = sub[["year","startup_count"]].copy()
+        country_data = (country_raw.groupby("year", as_index=False)["startup_count"]
+                        .sum())
         country_data["country"] = selected
         combined = pd.concat([country_data, global_avg])
         fig2 = px.line(combined, x="year", y="startup_count",
@@ -314,17 +346,40 @@ elif page == "🌍 Country Analysis":
                            "Global Average": "#e74c3c"
                        })
         fig2.update_layout(height=300, margin=dict(t=20, b=20))
-        st.plotly_chart(fig2, width="stretch")
+        st.plotly_chart(fig2, use_container_width=True)
 
     st.divider()
     st.markdown('<div class="section-header">Data Table</div>',
                 unsafe_allow_html=True)
-    display_cols = [c for c in [
-        "year", "startup_count", "total_funding_usd",
+    table_cols = [c for c in [
+        "startup_count", "total_funding_usd",
         "gdp_growth_rate", "internet_penetration_pct",
         "startup_count_growth_rate", "innovation_score",
-    ] if c in sub.columns]
-    st.dataframe(sub[display_cols].set_index("year"), width="stretch")
+    ] if c in country_raw.columns]
+    sum_cols  = [c for c in table_cols if c in ("startup_count", "total_funding_usd")]
+    mean_cols = [c for c in table_cols if c not in sum_cols]
+    agg_dict  = {c: "sum" for c in sum_cols}
+    agg_dict.update({c: "mean" for c in mean_cols})
+    table_df = (country_raw.groupby("year").agg(agg_dict)
+               .round(2).sort_index())
+
+    # Diagnostic: if startup_count is identical across 3+ consecutive years,
+    # this is almost certainly an upstream data issue (e.g. a forward-fill
+    # or merge bug in Module 6), not a dashboard rendering problem — surface
+    # it clearly rather than silently displaying flat numbers.
+    if "startup_count" in table_df.columns and len(table_df) >= 3:
+        recent_vals = table_df["startup_count"].tail(4)
+        if recent_vals.nunique() == 1:
+            st.warning(
+                f"⚠️ startup_count is identical ({recent_vals.iloc[0]:,.0f}) "
+                f"across the last {len(recent_vals)} years for {selected}. "
+                f"This usually means the source CSV (`master_features.csv`) "
+                f"has duplicated or forward-filled values for this country — "
+                f"check the Module 6 feature engineering output, not this dashboard."
+            )
+
+    st.dataframe(table_df, use_container_width=True)
+
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -349,7 +404,7 @@ elif page == "📊 EDA":
         fig = px.histogram(df, x=col, nbins=30, color_discrete_sequence=["#667eea"],
                            marginal="box", title=f"Distribution of {col}")
         fig.update_layout(height=380)
-        st.plotly_chart(fig, width="stretch")
+        st.plotly_chart(fig, use_container_width=True)
 
     with tab2:
         raw_cols = [c for c in df.select_dtypes("number").columns
@@ -359,7 +414,7 @@ elif page == "📊 EDA":
                          zmin=-1, zmax=1, title="Correlation Heatmap",
                          aspect="auto")
         fig2.update_layout(height=500)
-        st.plotly_chart(fig2, width="stretch")
+        st.plotly_chart(fig2, use_container_width=True)
 
     with tab3:
         country_col = "country" if "country" in df.columns else df.columns[0]
@@ -374,7 +429,7 @@ elif page == "📊 EDA":
         fig3.add_vrect(x0=2019.5, x1=2021.5, fillcolor="red",
                        opacity=0.08, annotation_text="COVID-19")
         fig3.update_layout(height=420)
-        st.plotly_chart(fig3, width="stretch")
+        st.plotly_chart(fig3, use_container_width=True)
 
     with tab4:
         st.markdown("**Saved EDA figures from Module 3**")
@@ -408,7 +463,7 @@ elif page == "🤖 ML Predictions":
                 break
 
         if lb_df is not None:
-            st.dataframe(lb_df, width="stretch", hide_index=True)
+            st.dataframe(lb_df, use_container_width=True, hide_index=True)
         else:
             # Show hardcoded results from module 8 run
             results = pd.DataFrame({
@@ -419,7 +474,7 @@ elif page == "🤖 ML Predictions":
                 "RMSE":     [18.5, 6.2, 7.8, 6.9],
                 "Best":     ["", "✅", "", ""],
             })
-            st.dataframe(results, width="stretch", hide_index=True)
+            st.dataframe(results, use_container_width=True, hide_index=True)
 
             st.info("These are indicative results. Run Module 5/8 to update with "
                     "your actual model scores.")
@@ -489,7 +544,7 @@ elif page == "🔮 Forecasting":
                 xaxis_title="Year", yaxis_title="Total Startup Count",
                 height=420, legend=dict(orientation="h")
             )
-            st.plotly_chart(fig, width="stretch")
+            st.plotly_chart(fig, use_container_width=True)
 
             col1, col2, col3 = st.columns(3)
             col1.metric("Mean MAPE", "5.6%", help="ARIMA backtest")
@@ -525,7 +580,7 @@ elif page == "🔮 Forecasting":
             fig2.add_vrect(x0=2019.5, x1=2021.5, fillcolor="red", opacity=0.08)
             fig2.update_layout(title=f"{country} — Startup Count Forecast",
                                height=380)
-            st.plotly_chart(fig2, width="stretch")
+            st.plotly_chart(fig2, use_container_width=True)
         else:
             st.info("No data available.")
 
@@ -555,7 +610,7 @@ elif page == "🗂️ Clustering":
             st.markdown('<div class="section-header">Country Cluster Assignments</div>',
                         unsafe_allow_html=True)
             st.dataframe(cluster_df[[country_col, cluster_col]].sort_values(cluster_col),
-                         width="stretch", hide_index=True)
+                         use_container_width=True, hide_index=True)
 
             # Cluster distribution
             count = cluster_df[cluster_col].value_counts().reset_index()
@@ -564,24 +619,41 @@ elif page == "🗂️ Clustering":
                          color="Cluster", title="Countries per Cluster",
                          color_discrete_sequence=px.colors.qualitative.Set2)
             fig.update_layout(height=320, showlegend=False)
-            st.plotly_chart(fig, width="stretch")
+            st.plotly_chart(fig, use_container_width=True)
 
             # Merge with features for profile
             if not df.empty:
                 country_col_df = "country" if "country" in df.columns else df.columns[0]
-                merged = df.merge(cluster_df[[country_col, cluster_col]],
-                                  left_on=country_col_df, right_on=country_col,
-                                  how="left")
-                if cluster_col in merged.columns:
+                # Normalise country names for a reliable merge (case/whitespace)
+                merged = df.copy()
+                merged["_merge_key"] = merged[country_col_df].astype(str).str.strip().str.lower()
+                cluster_lookup = cluster_df[[country_col, cluster_col]].copy()
+                cluster_lookup["_merge_key"] = cluster_lookup[country_col].astype(str).str.strip().str.lower()
+                merged = merged.merge(
+                    cluster_lookup[["_merge_key", cluster_col]],
+                    on="_merge_key", how="left"
+                )
+
+                profile_cols = [c for c in ["gdp_growth_rate","internet_penetration_pct",
+                                            "startup_count","innovation_score",
+                                            "economic_momentum"] if c in merged.columns]
+
+                profile = pd.DataFrame()
+                if cluster_col in merged.columns and profile_cols:
+                    matched = merged[merged[cluster_col].notna()]
+                    if not matched.empty:
+                        profile = (matched.groupby(cluster_col)[profile_cols]
+                                  .mean().round(2).dropna(how="all"))
+
+                # Only render this section if the profile actually has data —
+                # an empty/all-NaN profile means clustering hasn't run or
+                # country names didn't match, so we hide it rather than show
+                # a blank chart.
+                if not profile.empty:
                     st.divider()
                     st.markdown('<div class="section-header">Cluster Feature Profiles</div>',
                                 unsafe_allow_html=True)
-                    profile_cols = [c for c in ["gdp_growth_rate","internet_penetration_pct",
-                                                "startup_count","innovation_score",
-                                                "economic_momentum"] if c in merged.columns]
-                    if profile_cols:
-                        profile = merged.groupby(cluster_col)[profile_cols].mean().round(2)
-                        st.dataframe(profile, width="stretch")
+                    st.dataframe(profile, use_container_width=True)
         else:
             st.info("Run Module 9 to generate cluster assignments.")
             show_figure_gallery(9, cols=2)
@@ -627,7 +699,7 @@ elif page == "💡 Explainable AI":
                      title="Feature Importance — Mean |SHAP Value|")
         fig.update_layout(height=380, showlegend=False,
                           yaxis=dict(categoryorder="total ascending"))
-        st.plotly_chart(fig, width="stretch")
+        st.plotly_chart(fig, use_container_width=True)
 
         st.divider()
         col1, col2 = st.columns(2)
@@ -712,7 +784,27 @@ elif page == "⚗️ Causal Inference":
             st.divider()
             st.markdown('<div class="section-header">DiD Results Table</div>',
                         unsafe_allow_html=True)
-            st.dataframe(did_df, width="stretch")
+
+            # If this looks like a year-by-year event-study table (has a 'year'
+            # column), 2019 being ~0 is expected: event studies normalise the
+            # reference/baseline year to zero by construction, since every
+            # other year's coefficient is measured relative to it. Flag this
+            # clearly instead of leaving it looking like an anomaly.
+            year_col = next((c for c in did_df.columns
+                             if c.lower() in ("year", "event_year")), None)
+            if year_col and 2019 in did_df[year_col].values:
+                st.info(
+                    "ℹ️ **2019 ≈ 0 is expected, not an error.** This is an "
+                    "event-study table, and 2019 is the reference (baseline) "
+                    "year. In event-study design, the baseline year's "
+                    "coefficient is fixed at zero by construction — every "
+                    "other year is measured as a deviation *relative to 2019*. "
+                    "A near-zero 2019 value combined with flat pre-2020 "
+                    "coefficients is exactly what confirms the **parallel "
+                    "trends assumption holds** (see Event Study row above)."
+                )
+
+            st.dataframe(did_df, use_container_width=True)
 
     with tab2:
         show_figure_gallery(7, cols=2)

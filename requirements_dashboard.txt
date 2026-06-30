@@ -1,0 +1,10 @@
+# ============================================================
+# requirements_dashboard.txt
+# Minimal dependencies for Streamlit Community Cloud deployment
+# Only what scripts/dashboard.py actually imports
+# ============================================================
+streamlit==1.35.0
+pandas==2.2.2
+numpy==1.26.4
+plotly==5.22.0
+pyyaml==6.0.1
