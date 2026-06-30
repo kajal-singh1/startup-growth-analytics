@@ -6,7 +6,7 @@ Forecast horizon   : 2027  (3 years ahead)
 ARIMA countries    : 15
 LSTM mode          : lstm
 Stationary series  : 2/15
-Mean backtest MAPE : 5.6%
+Mean backtest MAPE : 8.6%
 Spec target MAPE   : < 15%
 Spec met           : YES
 
@@ -15,7 +15,7 @@ ARIMA ORDERS SELECTED
   Australia           : ARIMA(0, 1, 0)
   Brazil              : ARIMA(0, 1, 0)
   Canada              : ARIMA(0, 1, 0)
-  China               : ARIMA(0, 0, 0)
+  China               : ARIMA(0, 1, 0)
   France              : ARIMA(0, 1, 0)
   Germany             : ARIMA(0, 1, 0)
   India               : ARIMA(1, 1, 0)
@@ -26,17 +26,17 @@ ARIMA ORDERS SELECTED
   South Korea         : ARIMA(0, 1, 0)
   Sweden              : ARIMA(0, 1, 0)
   United Kingdom      : ARIMA(0, 1, 0)
-  United States       : ARIMA(0, 0, 0)
+  United States       : ARIMA(0, 1, 0)
 
 BACKTEST ACCURACY
 ----------------------------------------
   Australia           : MAPE=3.8%  RMSE=158
   Brazil              : MAPE=3.9%  RMSE=158
   Canada              : MAPE=4.4%  RMSE=255
-  China               : MAPE=0.0%  RMSE=0
+  China               : MAPE=11.7%  RMSE=2550
   France              : MAPE=3.6%  RMSE=158
   Germany             : MAPE=5.8%  RMSE=255
-  India               : MAPE=8.4%  RMSE=1216
+  India               : MAPE=21.0%  RMSE=3028
   Indonesia           : MAPE=14.9%  RMSE=660
 
 Figures saved: 10

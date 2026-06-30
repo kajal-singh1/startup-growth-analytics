@@ -1,6 +1,6 @@
 ======================================================================
 MODULE 7 — CAUSAL INFERENCE REPORT
-Generated: 2026-06-29 08:14:09
+Generated: 2026-06-30 17:42:03
 Dataset: 135 rows | 15 countries
 ======================================================================
 
@@ -10,11 +10,11 @@ TREATMENT DEFINITION
   Control countries: remainder
 
 METHOD 1: DIFFERENCE-IN-DIFFERENCES
-  DiD coef (basic)    : 4.6157  | p=0.1135
-  DiD coef (extended) : 7.5477  | p=0.0056
-  95% CI              : [2.2113, 12.8841]
-  R²                  : 0.7420
-  Interpretation: High-internet countries show +7.55pp higher
+  DiD coef (basic)    : 4.6929  | p=0.1074
+  DiD coef (extended) : 7.6896  | p=0.0058
+  95% CI              : [2.2231, 13.1561]
+  R²                  : 0.7451
+  Interpretation: High-internet countries show +7.69pp higher
   startup growth post-pandemic vs control, after controlling for confounders.
 
 METHOD 2: PROPENSITY SCORE MATCHING

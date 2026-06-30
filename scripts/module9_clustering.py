@@ -140,11 +140,16 @@ def prepare_cluster_features(df):
             feature_cols.append(col)
 
     # Aggregate to country level (mean across years)
-    if "country" in df.columns:
-        country_df = df.groupby("country")[feature_cols].mean().reset_index()
+    country_col = next((c for c in ["country", "country_name", "country_code"]
+                    if c in df.columns), None)
+    if country_col:
+        country_df = df.groupby(country_col)[feature_cols].mean()
+        country_df = country_df.reset_index().rename(columns={country_col: "country"})
+        country_df = country_df.set_index("country")
+        country_df["country"] = country_df.index
     else:
         country_df = df[feature_cols].copy()
-        country_df["country"] = [f"Country_{i}" for i in range(len(country_df))]
+        country_df["country"] = [f"Country_{i}" for i in range(len(df))]
 
     countries   = country_df["country"].values
     X_raw       = country_df[feature_cols].fillna(0).values
