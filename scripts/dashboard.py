@@ -149,7 +149,7 @@ def show_figure_gallery(module_num, cols=2):
         c_list = st.columns(len(row))
         for col, (name, path) in zip(c_list, row):
             col.image(str(path), caption=name.replace("_", " ").title(),
-                      use_column_width=True)
+                      width="stretch")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -280,7 +280,7 @@ if page == "🏠 Overview":
         fig.add_vrect(x0=2019.5, x1=2021.5, fillcolor="red",
                       opacity=0.08, annotation_text="COVID-19")
         fig.update_layout(height=320, margin=dict(t=20, b=20))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -323,7 +323,7 @@ elif page == "🌍 Country Analysis":
             fig.add_vrect(x0=2019.5, x1=2021.5, fillcolor="red",
                           opacity=0.08, annotation_text="COVID-19")
             fig.update_layout(height=320, margin=dict(t=40, b=20))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
         else:
             st.info(f"Not enough year-wise data to chart {metric} for {selected}.")
 
@@ -346,7 +346,7 @@ elif page == "🌍 Country Analysis":
                            "Global Average": "#e74c3c"
                        })
         fig2.update_layout(height=300, margin=dict(t=20, b=20))
-        st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig2, width="stretch")
 
     st.divider()
     st.markdown('<div class="section-header">Data Table</div>',
@@ -378,7 +378,7 @@ elif page == "🌍 Country Analysis":
                 f"check the Module 6 feature engineering output, not this dashboard."
             )
 
-    st.dataframe(table_df, use_container_width=True)
+    st.dataframe(table_df, width="stretch")
 
 
 
@@ -404,7 +404,7 @@ elif page == "📊 EDA":
         fig = px.histogram(df, x=col, nbins=30, color_discrete_sequence=["#667eea"],
                            marginal="box", title=f"Distribution of {col}")
         fig.update_layout(height=380)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     with tab2:
         raw_cols = [c for c in df.select_dtypes("number").columns
@@ -414,7 +414,7 @@ elif page == "📊 EDA":
                          zmin=-1, zmax=1, title="Correlation Heatmap",
                          aspect="auto")
         fig2.update_layout(height=500)
-        st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig2, width="stretch")
 
     with tab3:
         country_col = "country" if "country" in df.columns else df.columns[0]
@@ -429,7 +429,7 @@ elif page == "📊 EDA":
         fig3.add_vrect(x0=2019.5, x1=2021.5, fillcolor="red",
                        opacity=0.08, annotation_text="COVID-19")
         fig3.update_layout(height=420)
-        st.plotly_chart(fig3, use_container_width=True)
+        st.plotly_chart(fig3, width="stretch")
 
     with tab4:
         st.markdown("**Saved EDA figures from Module 3**")
@@ -463,7 +463,7 @@ elif page == "🤖 ML Predictions":
                 break
 
         if lb_df is not None:
-            st.dataframe(lb_df, use_container_width=True, hide_index=True)
+            st.dataframe(lb_df, width="stretch", hide_index=True)
         else:
             # Show hardcoded results from module 8 run
             results = pd.DataFrame({
@@ -474,7 +474,7 @@ elif page == "🤖 ML Predictions":
                 "RMSE":     [18.5, 6.2, 7.8, 6.9],
                 "Best":     ["", "✅", "", ""],
             })
-            st.dataframe(results, use_container_width=True, hide_index=True)
+            st.dataframe(results, width="stretch", hide_index=True)
 
             st.info("These are indicative results. Run Module 5/8 to update with "
                     "your actual model scores.")
@@ -544,7 +544,7 @@ elif page == "🔮 Forecasting":
                 xaxis_title="Year", yaxis_title="Total Startup Count",
                 height=420, legend=dict(orientation="h")
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
             col1, col2, col3 = st.columns(3)
             col1.metric("Mean MAPE", "5.6%", help="ARIMA backtest")
@@ -580,7 +580,7 @@ elif page == "🔮 Forecasting":
             fig2.add_vrect(x0=2019.5, x1=2021.5, fillcolor="red", opacity=0.08)
             fig2.update_layout(title=f"{country} — Startup Count Forecast",
                                height=380)
-            st.plotly_chart(fig2, use_container_width=True)
+            st.plotly_chart(fig2, width="stretch")
         else:
             st.info("No data available.")
 
@@ -610,7 +610,7 @@ elif page == "🗂️ Clustering":
             st.markdown('<div class="section-header">Country Cluster Assignments</div>',
                         unsafe_allow_html=True)
             st.dataframe(cluster_df[[country_col, cluster_col]].sort_values(cluster_col),
-                         use_container_width=True, hide_index=True)
+                         width="stretch", hide_index=True)
 
             # Cluster distribution
             count = cluster_df[cluster_col].value_counts().reset_index()
@@ -619,7 +619,7 @@ elif page == "🗂️ Clustering":
                          color="Cluster", title="Countries per Cluster",
                          color_discrete_sequence=px.colors.qualitative.Set2)
             fig.update_layout(height=320, showlegend=False)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
             # Merge with features for profile
             if not df.empty:
@@ -653,7 +653,7 @@ elif page == "🗂️ Clustering":
                     st.divider()
                     st.markdown('<div class="section-header">Cluster Feature Profiles</div>',
                                 unsafe_allow_html=True)
-                    st.dataframe(profile, use_container_width=True)
+                    st.dataframe(profile, width="stretch")
         else:
             st.info("Run Module 9 to generate cluster assignments.")
             show_figure_gallery(9, cols=2)
@@ -699,7 +699,7 @@ elif page == "💡 Explainable AI":
                      title="Feature Importance — Mean |SHAP Value|")
         fig.update_layout(height=380, showlegend=False,
                           yaxis=dict(categoryorder="total ascending"))
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
         st.divider()
         col1, col2 = st.columns(2)
@@ -804,7 +804,7 @@ elif page == "⚗️ Causal Inference":
                     "trends assumption holds** (see Event Study row above)."
                 )
 
-            st.dataframe(did_df, use_container_width=True)
+            st.dataframe(did_df, width="stretch")
 
     with tab2:
         show_figure_gallery(7, cols=2)
